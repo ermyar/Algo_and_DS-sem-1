@@ -6,13 +6,13 @@
 const int kEps = 6;
 
 void DoQuest(std::vector<double>& pref) {
-  int lx;
-  int rx;
-  std::cin >> lx >> rx;
-  double val = pref[rx + 1] - pref[lx];
-  val /= (double)(rx - lx + 1);
-  double ans = std::exp(val);
-  std::cout << ans << std::endl;
+  int left;
+  int right;
+  std::cin >> left >> right;
+  double value = pref[right + 1] - pref[left];
+  value /= (right - left + 1);
+  double answer = std::exp(value);
+  std::cout << answer << std::endl;
 }
 
 int main() {
