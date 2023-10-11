@@ -1,60 +1,57 @@
 #include <iostream>
 #include <vector>
 
-#define pii pair<int, int>
-
 using namespace std;
 
 const int kMaxn = 1e7 + 100, kA = 123, kB = 45, kMod = 1e7 + 4321;
 
-int ar[kMaxn];
-
-int Kth(int vl, int vr, int vk) {
-  if (vr - vl <= 1) {
-    return ar[vl];
+int Kth(std::vector<int>& ar, int left, int right, int var_k) {
+  if (right - left <= 1) {
+    return ar[left];
   }
-  int vm = (vr + vl) / 2;
-  int vi = vl;
-  int vj = vr - 1;
-  if (ar[vl] > ar[vm]) {
-    swap(ar[vl], ar[vm]);
+  int medium = (right + left) / 2;
+  int var_i = left;
+  int var_j = right - 1;
+  if (ar[left] > ar[medium]) {
+    swap(ar[left], ar[medium]);
   }
-  if (ar[vm] > ar[vj]) {
-    swap(ar[vm], ar[vj]);
+  if (ar[medium] > ar[var_j]) {
+    swap(ar[medium], ar[var_j]);
   }
-  if (ar[vl] > ar[vm]) {
-    swap(ar[vl], ar[vm]);
+  if (ar[left] > ar[medium]) {
+    swap(ar[left], ar[medium]);
   }
-  auto vx = ar[vm];
-  while (vi <= vj) {
-    while (ar[vi] < vx) {
-      ++vi;
+  auto var_x = ar[medium];
+  while (var_i <= var_j) {
+    while (ar[var_i] < var_x) {
+      ++var_i;
     }
-    while (ar[vj] > vx) {
-      --vj;
+    while (ar[var_j] > var_x) {
+      --var_j;
     }
-    if (vi >= vj) {
+    if (var_i >= var_j) {
       break;
     }
-    swap(ar[vi], ar[vj]);
-    vi++;
-    vj--;
+    swap(ar[var_i], ar[var_j]);
+    var_i++;
+    var_j--;
   }
-  if (vk < (vi - vl)) {
-    return Kth(vl, vi, vk);
+  if (var_k < (var_i - left)) {
+    return Kth(ar, left, var_i, var_k);
   }
-  return Kth(vi, vr, vk - (vi - vl));
+  return Kth(ar, var_i, right, var_k - (var_i - left));
 }
 
-int vn;
-int vk;
 
 int main() {
-  cin >> vn >> vk >> ar[0] >> ar[1];
-  for (int i = 2; i <= vn; ++i) {
+  int var_n;
+  int var_k;
+  std::vector<int> ar(var_n + 1);
+  cin >> var_n >> var_k >> ar[0] >> ar[1];
+  for (int i = 2; i <= var_n; ++i) {
     ar[i] = (kA * ar[i - 1] + kB * ar[i - 2]) % kMod;
   }
-  cout << Kth(0, vn, vk - 1);
+  cout << Kth(ar, 0, var_n, var_k - 1);
   return 0;
 }
 
