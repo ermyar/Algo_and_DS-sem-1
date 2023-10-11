@@ -5,7 +5,7 @@
 
 const int kEps = 6;
 
-void DoQuest(std::vector<double>& pref) {
+void DoQuest(const std::vector<double>& pref) {
   int left;
   int right;
   std::cin >> left >> right;
