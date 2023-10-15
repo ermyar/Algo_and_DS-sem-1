@@ -1,0 +1,18 @@
+16
+insert 7
+extract_min
+insert 1
+insert 2
+extract_max
+insert 2
+insert 6
+size
+insert 9
+insert 7
+get_max
+size
+clear
+get_max
+insert 8
+extract_max
+
