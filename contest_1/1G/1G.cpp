@@ -2,16 +2,13 @@
 
 const int kMaxn = 1e6 + 100, kMaxl = 8, kSmth = 270;
 
-long long ar[kMaxn], br[kMaxn];
-int cnt[kSmth];
-
 int GetByte(long long vx, int vk) {
   long long tmp = (vx >> (kMaxl * vk));
   tmp %= (1 << kMaxl);
-  return (int)tmp;
+  return static_cast<int>(tmp);
 }
 
-void Sort(int lx, int rx, int vk) {
+void Sort(int lx, int rx, int vk, long long* ar, long long* br, int* cnt) {
   for (int i = 0; i < kSmth; ++i) {
     cnt[i] = 0;
   }
@@ -34,11 +31,14 @@ void Sort(int lx, int rx, int vk) {
 signed main() {
   int nu;
   std::cin >> nu;
+  long long* ar = new long long[kMaxn];
+  long long* br = new long long[kMaxn];
+  int* cnt = new int[kSmth];
   for (int i = 0; i < nu; ++i) {
     std::cin >> ar[i];
   }
   for (int i = 0; i < kMaxl; ++i) {
-    Sort(0, nu, i);
+    Sort(0, nu, i, ar, br, cnt);
   }
   for (int j = 0; j < nu; ++j) {
     std::cout << ar[j] << ' ';
