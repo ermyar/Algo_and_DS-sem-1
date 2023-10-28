@@ -1,49 +1,59 @@
 #include <iostream>
+#include <vector>
 
-const int kMaxn = 1e6 + 100, kMaxl = 63;
+using namespace std;
 
-long long ar[kMaxn], pw[kMaxl];
+const int kMaxn = 1e6 + 100;
 
-void Sort(int lx, int rx, int vk) {
-  if (vk == -1) {
+int ar[kMaxn];
+
+void Sort(int vl, int vr) {
+  if (vr - vl <= 1) {
     return;
   }
-  if (rx - lx <= 1) {
-    return;
+  int vm = (vr + vl) / 2;
+  int vi = vl;
+  int vj = vr - 1;
+  if (ar[vl] > ar[vm]) {
+    swap(ar[vl], ar[vm]);
   }
-  int pr = rx - 1;
-  int pl = lx;
-  while (true) {
-    while (pl < rx && (ar[pl] & pw[vk]) == 0) {
-      pl++;
+  if (ar[vm] > ar[vj]) {
+    swap(ar[vm], ar[vj]);
+  }
+  if (ar[vl] > ar[vm]) {
+    swap(ar[vl], ar[vm]);
+  }
+  int vx = ar[vm];
+  while (vi <= vj) {
+    while (ar[vi] < vx) {
+      ++vi;
     }
-    while (pr > lx && (ar[pr] & pw[vk]) != 0) {
-      pr--;
+    while (ar[vj] > vx) {
+      --vj;
     }
-
-    if (pl < pr) {
-      std::swap(ar[pl], ar[pr]);
-    } else {
+    if (vi >= vj) {
       break;
     }
+    swap(ar[vi], ar[vj]);
+    vi++;
+    vj--;
   }
-  Sort(lx, pl, vk - 1);
-  Sort(pl, rx, vk - 1);
+  Sort(vl, vi);
+  Sort(vi, vr);
 }
 
-signed main() {
-  pw[0] = 1;
-  for (int i = 1; i < kMaxl; ++i) {
-    pw[i] = pw[i - 1] * 2;
+int vn;
+
+int main() {
+  cin >> vn;
+  for (int i = 0; i < vn; ++i) {
+    cin >> ar[i];
   }
-  int nu;
-  std::cin >> nu;
-  for (int i = 0; i < nu; ++i) {
-    std::cin >> ar[i];
+  Sort(0, vn);
+  for (int i = 0; i < vn; ++i) {
+    cout << ar[i] << ' ';
   }
-  Sort(0, nu, kMaxl - 1);
-  for (int i = 0; i < nu; ++i) {
-    std::cout << ar[i] << ' ';
-  }
+  cout << endl;
   return 0;
 }
+
