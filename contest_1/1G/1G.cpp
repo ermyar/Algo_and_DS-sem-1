@@ -1,6 +1,8 @@
 #include <iostream>
 
-const int kMaxn = 1e6 + 100, kMaxl = 8, kSmth = 270;
+const int kMaxn = 1e6 + 100;
+const int kMaxl = 8;
+const int kSmth = 270;
 
 int GetByte(long long vx, int vk) {
   long long tmp = (vx >> (kMaxl * vk));
@@ -8,23 +10,23 @@ int GetByte(long long vx, int vk) {
   return static_cast<int>(tmp);
 }
 
-void Sort(int lx, int rx, int vk, long long* ar, long long* br, int* cnt) {
+void Sort(int left, int right, int var_k, long long* arr_a, long long* arr_b, int* count) {
   for (int i = 0; i < kSmth; ++i) {
-    cnt[i] = 0;
+    count[i] = 0;
   }
-  for (int i = lx; i < rx; ++i) {
-    ++cnt[GetByte(ar[i], vk)];
+  for (int i = left; i < right; ++i) {
+    ++count[GetByte(arr_a[i], var_k)];
   }
   for (int i = 1; i < kSmth; ++i) {
-    cnt[i] += cnt[i - 1];
+    count[i] += count[i - 1];
   }
-  for (int i = rx - 1; i >= lx; --i) {
-    int tmp = GetByte(ar[i], vk);
-    br[cnt[tmp] - 1] = ar[i];
-    cnt[tmp]--;
+  for (int i = right - 1; i >= left; --i) {
+    int tmp = GetByte(arr_a[i], var_k);
+    arr_b[count[tmp] - 1] = arr_a[i];
+    count[tmp]--;
   }
-  for (int i = lx; i < rx; ++i) {
-    ar[i] = br[i];
+  for (int i = left; i < right; ++i) {
+    arr_a[i] = arr_b[i];
   }
 }
 
