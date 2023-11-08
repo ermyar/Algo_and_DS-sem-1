@@ -1,59 +1,52 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
-const int kMaxn = 1e6 + 100;
-
-int ar[kMaxn];
-
-void Sort(int vl, int vr) {
-  if (vr - vl <= 1) {
+void Sort(int left, int right, int* ar) {
+  if (right - left <= 1) {
     return;
   }
-  int vm = (vr + vl) / 2;
-  int vi = vl;
-  int vj = vr - 1;
-  if (ar[vl] > ar[vm]) {
-    swap(ar[vl], ar[vm]);
+  int mid = (right + left) / 2;
+  int var_i = left;
+  int var_j = right - 1;
+  if (ar[left] > ar[mid]) {
+    std::swap(ar[left], ar[mid]);
   }
-  if (ar[vm] > ar[vj]) {
-    swap(ar[vm], ar[vj]);
+  if (ar[mid] > ar[var_j]) {
+    std::swap(ar[mid], ar[var_j]);
   }
-  if (ar[vl] > ar[vm]) {
-    swap(ar[vl], ar[vm]);
+  if (ar[left] > ar[mid]) {
+    std::swap(ar[left], ar[mid]);
   }
-  int vx = ar[vm];
-  while (vi <= vj) {
-    while (ar[vi] < vx) {
-      ++vi;
+  int var_x = ar[mid];
+  while (var_i <= var_j) {
+    while (ar[var_i] < var_x) {
+      ++var_i;
     }
-    while (ar[vj] > vx) {
-      --vj;
+    while (ar[var_j] > var_x) {
+      --var_j;
     }
-    if (vi >= vj) {
+    if (var_i >= var_j) {
       break;
     }
-    swap(ar[vi], ar[vj]);
-    vi++;
-    vj--;
+    std::swap(ar[var_i], ar[var_j]);
+    var_i++;
+    var_j--;
   }
-  Sort(vl, vi);
-  Sort(vi, vr);
+  Sort(left, var_i, ar);
+  Sort(var_i, right, ar);
 }
-
-int vn;
 
 int main() {
-  cin >> vn;
-  for (int i = 0; i < vn; ++i) {
-    cin >> ar[i];
+  int var_n;
+  std::cin >> var_n;
+  int* ar = new int[var_n];
+  for (int i = 0; i < var_n; ++i) {
+    std::cin >> ar[i];
   }
-  Sort(0, vn);
-  for (int i = 0; i < vn; ++i) {
-    cout << ar[i] << ' ';
+  Sort(0, var_n, ar);
+  for (int i = 0; i < var_n; ++i) {
+    std::cout << ar[i] << ' ';
   }
-  cout << endl;
+  delete[] ar;
   return 0;
 }
-
