@@ -2,13 +2,7 @@
 #include <vector>
 
 class Queue {
- private:
-  std::vector<int> left_;
-  std::vector<int> right_;
-  int count_ = 0;
-  int middle_ = 0;
-
- public:
+public:
   void Init(int number) {
     left_.resize(number + 2);
     right_.resize(number + 2);
@@ -43,6 +37,12 @@ class Queue {
       middle_ = right_[middle_];
     }
   }
+
+ private:
+  std::vector<int> left_;
+  std::vector<int> right_;
+  int count_ = 0;
+  int middle_ = 0;
 };
 
 int main() {
