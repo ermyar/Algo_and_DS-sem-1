@@ -5,10 +5,6 @@
 #include <string>
 
 class MagicHat {
- private:
-  std::multiset<int> multiset_;
-  std::queue<int> deque_;
-
  public:
   void Add(int var) {
     deque_.push(var);
@@ -51,6 +47,10 @@ class MagicHat {
       deque_.pop();
     }
   }
+
+ private:
+  std::multiset<int> multiset_;
+  std::queue<int> deque_;
 };
 
 int main() {
