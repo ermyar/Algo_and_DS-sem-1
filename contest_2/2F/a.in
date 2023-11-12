@@ -1,0 +1,12 @@
+11
+insert 6
+insert 4
+insert 5
+decreaseKey 3 1
+getMin
+extractMin
+getMin
+extractMin
+getMin
+extractMin
+extractMin
