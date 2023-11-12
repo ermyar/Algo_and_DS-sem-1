@@ -4,12 +4,6 @@
 #include <vector>
 
 class Heap {
- private:
-  std::vector<long long> value_;
-  std::vector<int> pos_;
-  std::vector<int> heap_;
-  int cnt_ = 0;
-
  public:
   void Init(int number) {
     pos_.resize(number);
@@ -64,6 +58,12 @@ class Heap {
     value_[ind] -= delta;
     Siftup(pos_[ind]);
   }
+
+private:
+  std::vector<long long> value_;
+  std::vector<int> pos_;
+  std::vector<int> heap_;
+  int cnt_ = 0;
 };
 
 int main() {
