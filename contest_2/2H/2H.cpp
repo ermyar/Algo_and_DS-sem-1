@@ -6,12 +6,6 @@
 const int kInf = 1e9 + 100;
 
 class Heap {
- private:
-  std::vector<int> value_;
-  std::vector<int> pos_;
-  std::vector<int> heap_;
-  int cnt_ = 0;
-  int sign_ = 1;
 
  public:
   Heap(int sg) { sign_ = sg; }
@@ -98,6 +92,14 @@ class Heap {
   }
 
   int Size() const { return cnt_; }
+
+  
+ private:
+  std::vector<int> value_;
+  std::vector<int> pos_;
+  std::vector<int> heap_;
+  int cnt_ = 0;
+  int sign_ = 1;
 };
 
 int main() {
