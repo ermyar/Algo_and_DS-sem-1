@@ -2,10 +2,8 @@
 #include <iostream>
 #include <vector>
 
-struct Fenwick {
-  std::vector<long long> tr;
-  std::vector<int> vals;
-
+class Fenwick {
+ public:
   void Update(int val, int tmp) {
     int rx = std::lower_bound(vals.begin(), vals.end(), val) - vals.begin();
     for (int j = rx; j < (int)tr.size(); j |= (j + 1)) {
@@ -27,6 +25,17 @@ struct Fenwick {
     }
     return ans;
   }
+
+  void Build(const std::vector<int>& st) {
+    tr.resize(st.size() + 1, 0);
+    for (auto i : st) {
+      vals.push_back(i);
+    }
+  }
+
+ private:
+  std::vector<long long> tr;
+  std::vector<int> vals;
 };
 
 struct FenOfFen {
@@ -47,6 +56,13 @@ struct FenOfFen {
       ans = tr[0].Get(val);
     }
     return ans;
+  }
+
+  void Build(const std::vector<std::vector<int>>& st) {
+    tr.resize(st.size());
+    for (int i = 0; i < st.size(); ++i) {
+      tr[i].Build(st[i]);
+    }
   }
 };
 
@@ -82,11 +98,8 @@ void Compress(int nu, std::vector<int>& st_x, std::vector<int>& ar_x,
   for (int i = 0; i < (int)st.size(); ++i) {
     std::sort(st[i].begin(), st[i].end());
     st[i].erase(std::unique(st[i].begin(), st[i].end()), st[i].end());
-    for (int j = 0; j < (int)st[i].size(); ++j) {
-      tmp.tr[i].vals.push_back(st[i][j]);
-    }
-    tmp.tr[i].tr.resize(st[i].size() + 1, 0);
   }
+  tmp.Build(st);
 }
 
 int main() {
