@@ -4,12 +4,8 @@
 
 const int kL = 30;
 
-struct SparceTable {
-  int size;
-  std::vector<int> value;
-  std::vector<int> lg;
-  std::vector<int> st[kL];
-
+class SparceTable {
+ public:
   SparceTable(std::vector<int>& ar) {
     value = ar;
     size = ar.size();
@@ -42,6 +38,12 @@ struct SparceTable {
     }
     return pos2;
   }
+  
+ private:
+  int size;
+  std::vector<int> value;
+  std::vector<int> lg;
+  std::vector<int> st[kL];
 };
 
 int main() {
