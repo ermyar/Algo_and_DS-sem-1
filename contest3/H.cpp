@@ -5,65 +5,67 @@
 class Fenwick {
  public:
   void Update(int val, int tmp) {
-    int rx = std::lower_bound(vals.begin(), vals.end(), val) - vals.begin();
-    for (int j = rx; j < (int)tr.size(); j |= (j + 1)) {
-      tr[j] += tmp;
+    int rx = std::lower_bound(vals_.begin(), vals_.end(), val) - vals_.begin();
+    for (int j = rx; j < (int)tr_.size(); j |= (j + 1)) {
+      tr_[j] += tmp;
     }
   }
 
   long long Get(int val) {
-    if (val < vals[0]) {
+    if (val < vals_[0]) {
       return 0;
     }
-    int rx = std::upper_bound(vals.begin(), vals.end(), val) - vals.begin() - 1;
+    int rx = std::upper_bound(vals_.begin(), vals_.end(), val) - vals_.begin() - 1;
     long long ans = 0;
     for (int j = rx; j > 0; j = (j & (j + 1)) - 1) {
-      ans += tr[j];
+      ans += tr_[j];
     }
     if (rx == 0) {
-      ans = tr[0];
+      ans = tr_[0];
     }
     return ans;
   }
 
   void Build(const std::vector<int>& st) {
-    tr.resize(st.size() + 1, 0);
+    tr_.resize(st.size() + 1, 0);
     for (auto i : st) {
-      vals.push_back(i);
+      vals_.push_back(i);
     }
   }
 
  private:
-  std::vector<long long> tr;
-  std::vector<int> vals;
+  std::vector<long long> tr_;
+  std::vector<int> vals_;
 };
 
-struct FenOfFen {
-  std::vector<Fenwick> tr;
-
+class FenOfFen {
+ public:
   void Update(int rx, int val, int weight) {
-    for (int i = rx; i < (int)tr.size(); i |= (i + 1)) {
-      tr[i].Update(val, weight);
+    for (int i = rx; i < (int)tr_.size(); i |= (i + 1)) {
+      tr_[i].Update(val, weight);
     }
   }
 
   long long Get(int rx, int val) {
     long long ans = 0;
     for (int j = rx; j > 0; j = (j & (j + 1)) - 1) {
-      ans += tr[j].Get(val);
+      ans += tr_[j].Get(val);
     }
     if (rx == 0) {
-      ans = tr[0].Get(val);
+      ans = tr_[0].Get(val);
     }
     return ans;
   }
 
   void Build(const std::vector<std::vector<int>>& st) {
-    tr.resize(st.size());
+    tr_.resize(st.size());
     for (int i = 0; i < st.size(); ++i) {
-      tr[i].Build(st[i]);
+      tr_[i].Build(st[i]);
     }
   }
+
+ private:
+  std::vector<Fenwick> tr_;
 };
 
 void Input(int nu, std::vector<int>& ar_x, std::vector<int>& ar_y,
@@ -94,7 +96,6 @@ void Compress(int nu, std::vector<int>& st_x, std::vector<int>& ar_x,
       st[j].push_back(ar_y[i]);
     }
   }
-  tmp.tr.resize(st.size());
   for (int i = 0; i < (int)st.size(); ++i) {
     std::sort(st[i].begin(), st[i].end());
     st[i].erase(std::unique(st[i].begin(), st[i].end()), st[i].end());
