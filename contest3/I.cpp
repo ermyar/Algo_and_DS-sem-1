@@ -2,27 +2,27 @@
 #include <iostream>
 #include <vector>
 
-const int kL = 30;
+const int kLen = 30;
 
 class SparceTable {
  public:
   SparceTable(std::vector<int>& ar) {
-    value = ar;
-    size = ar.size();
-    lg.resize(size + 1);
-    lg[0] = -1;
-    for (int i = 0; i < size; ++i) {
-      lg[i + 1] = lg[(i + 1) / 2] + 1;
+    value_ = ar;
+    size_ = ar.size();
+    lg_.resize(size_ + 1);
+    lg_[0] = -1;
+    for (int i = 0; i < size_; ++i) {
+      lg_[i + 1] = lg_[(i + 1) / 2] + 1;
     }
-    for (int i = 0; i < kL; ++i) {
-      for (int j = 0; j + (1 << i) <= size; ++j) {
+    for (int i = 0; i < kLen; ++i) {
+      for (int j = 0; j + (1 << i) <= size_; ++j) {
         if (i == 0) {
-          st[0].push_back(j);
+          st_[0].push_back(j);
         } else {
-          if (ar[st[i - 1][j]] > ar[st[i - 1][j + (1 << (i - 1))]]) {
-            st[i].push_back(st[i - 1][j + (1 << (i - 1))]);
+          if (ar[st_[i - 1][j]] > ar[st_[i - 1][j + (1 << (i - 1))]]) {
+            st_[i].push_back(st_[i - 1][j + (1 << (i - 1))]);
           } else {
-            st[i].push_back(st[i - 1][j]);
+            st_[i].push_back(st_[i - 1][j]);
           }
         }
       }
@@ -30,20 +30,20 @@ class SparceTable {
   }
 
   int Query(int lx, int rx) {
-    int len = lg[rx - lx];
-    int pos1 = st[len][lx];
-    int pos2 = st[len][rx - (1 << len)];
-    if (value[pos1] < value[pos2]) {
+    int len = lg_[rx - lx];
+    int pos1 = st_[len][lx];
+    int pos2 = st_[len][rx - (1 << len)];
+    if (value_[pos1] < value_[pos2]) {
       return pos1;
     }
     return pos2;
   }
   
  private:
-  int size;
-  std::vector<int> value;
-  std::vector<int> lg;
-  std::vector<int> st[kL];
+  int size_;
+  std::vector<int> value_;
+  std::vector<int> lg_;
+  std::vector<int> st_[kLen];
 };
 
 int main() {
